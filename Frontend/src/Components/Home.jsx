@@ -1,18 +1,12 @@
-import React from 'react'
+import React from 'react';
+import NavBar from './NavBar';
 
 function Home() {
     return (
         <>
-            <nav>
-                <button>Login as Architect</button>
-                <button>Login as Consumer</button>
-                <button>Login as Seller</button>
-                <button>Chats</button>
-                <button>Contact Us</button>
-                <button>Profile</button>
-            </nav>
+            <NavBar/>
         </>
-    )
+    );
 }
 
-export default Home
+export default Home;
