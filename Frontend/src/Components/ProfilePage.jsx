@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { db } from '../Firebase/firebase.config';
+import { collection, addDoc } from 'firebase/firestore';
 
 function ProfilePage({ UserType }) {
   const [normalUser, setNormalUser] = useState({
@@ -30,8 +32,6 @@ function ProfilePage({ UserType }) {
   };
 
   async function getUserData() {
-    // complete the backend to return the user as the below format
-    // if the user details does not have any of the coloumns just set it to null or it's default value based the on the data type
     return {
       fullName: "Badri",
       email: "Heybadrinath@gmail.com",
@@ -49,12 +49,19 @@ function ProfilePage({ UserType }) {
     }
   }
 
-  function handleSubmit() {
-    // Handle form submission
-    console.log("Normal User Data:", normalUser);
-    console.log("Seller User Data:", sellerUser);
-    alert("Profile updated successfully");
-  }
+  const handleSubmit = async () => {
+    try {
+      if (UserType === "buyer") {
+        await addDoc(collection(db, "users"), normalUser);
+      } else if (UserType === "seller") {
+        await addDoc(collection(db, "users"), sellerUser);
+      }
+      console.log("Profile updated successfully");
+      alert("Profile updated successfully");
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
